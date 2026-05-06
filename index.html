@@ -92,11 +92,12 @@
                 <div class="absolute inset-0 z-30 pointer-events-none" style="background: linear-gradient(to top, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%); clip-path: polygon(0 100%, 50% 50%, 100% 100%); background-color: #c7a128;"></div>
 
                 <!-- Envelope Top Flap -->
-                <div id="envelope-flap" class="absolute top-0 left-0 w-full h-full z-40 origin-top transition-transform duration-700" style="clip-path: polygon(0 0, 100% 0, 50% 50%); background-color: #e6c55c;">
+                <div id="envelope-flap" class="absolute top-0 left-0 w-full h-full z-40 origin-top transition-transform duration-700">
+                    <div class="absolute inset-0 pointer-events-none" style="clip-path: polygon(0 0, 100% 0, 50% 50%); background-color: #e6c55c;"></div>
                     <!-- Wax Seal -->
-                    <div class="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-red-800 rounded-full shadow-lg flex items-center justify-center border border-red-900/50">
+                    <div class="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-red-800 rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.3)] flex items-center justify-center border border-red-900/50 pointer-events-none">
                         <div class="w-12 h-12 rounded-full border border-red-700 flex items-center justify-center">
-                            <span class="font-heading text-white/90 text-sm">Open</span>
+                            <span class="font-heading text-white/90 text-xs tracking-wider">OPEN</span>
                         </div>
                     </div>
                 </div>
