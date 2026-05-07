@@ -115,15 +115,31 @@
         </div>
     </div>
 
-    <!-- AUDIO: Musik latar -->
+    <!-- ================================================================ -->
+    <!-- AUDIO: Musik latar dari GitHub (RAW link) -->
+    <!-- ================================================================ -->
     <audio id="music" autoplay loop>
-        <source src="https://drive.google.com/uc?export=download&id=1FWRCIP1DtaEAY0eeapJ16T1RAAc0Z_vz" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/zackalb/Website-Wedding/main/vidgap-com-_ruanglyrics-7605887874285735186-music.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
     </audio>
 
-    <!-- Tombol Play Music -->
-    <button onclick="document.getElementById('music').play()" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #D4AF37; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-family: sans-serif; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
-        ▶ Play Music
-    </button>
+    <!-- Tombol Pemutar Musik (Styling sesuai tema pernikahan) -->
+    <div id="music-control" class="fixed bottom-5 right-5 z-[1000] cursor-pointer group">
+        <div class="relative">
+            <!-- Lingkaran latar belakang -->
+            <div class="w-14 h-14 rounded-full bg-gold shadow-lg flex items-center justify-center transition-all duration-300 group-hover:bg-darkGold group-hover:scale-105">
+                <!-- Ikon Play (akan berganti menggunakan JS) -->
+                <svg id="music-icon" class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <!-- Efek gelombang suara (animasi saat musik diputar) -->
+            <div id="music-wave" class="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300">
+                <div class="absolute inset-0 rounded-full border-2 border-gold animate-ping"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- BAGIAN: Wadah Animasi Daun Gugur (Floating Elements) -->
     <div id="leaf-container"></div>
@@ -429,8 +445,8 @@
             const leaf = document.createElement('div');
             leaf.classList.add('leaf');
             const startPos = Math.random() * window.innerWidth;
-            const size = Math.random() * 8 + 6; // Ukuran sedikit lebih kecil
-            const duration = Math.random() * 2 + 2; // Durasi jatuh lebih cepat (2 - 4 detik)
+            const size = Math.random() * 8 + 6;
+            const duration = Math.random() * 2 + 2;
             const delay = Math.random() * 1;
 
             leaf.style.left = startPos + 'px';
@@ -438,12 +454,11 @@
             leaf.style.height = size + 'px';
             leaf.style.animationDuration = duration + 's';
             leaf.style.animationDelay = delay + 's';
-            leaf.style.opacity = Math.random() * 0.5 + 0.3; // Sedikit lebih tebal
+            leaf.style.opacity = Math.random() * 0.5 + 0.3;
 
             container.appendChild(leaf);
             setTimeout(() => { leaf.remove(); }, (duration + delay) * 1000);
         }
-        // Interval yang sangat cepat (50ms) agar intensitasnya seperti hujan
         setInterval(createLeaf, 50);
 
         // --- Kontrol Mobile Menu ---
@@ -502,27 +517,18 @@
 
         // --- Efek Zoom Hero & Envelope Logic ---
         function openEnvelope() {
-            // Hilangkan instruksi dan teks atas
             document.getElementById('envelope-instruction').style.opacity = '0';
             document.getElementById('envelope-text').style.opacity = '0';
-
-            // Buka flap atas
             document.getElementById('envelope-flap').classList.add('envelope-open-flap');
 
-            // Keluarkan kertas sedikit
             setTimeout(() => {
                 document.getElementById('envelope-paper').classList.add('envelope-paper-up');
             }, 300);
 
-            // Hilangkan overlay dan mulai hero animasi
             setTimeout(() => {
                 const overlay = document.getElementById('envelope-overlay');
                 overlay.classList.add('envelope-fade-out');
-
-                // Unlock body scroll
                 document.body.classList.remove('body-locked');
-
-                // Trigger hero zoom
                 const img = document.getElementById('hero-img');
                 if (img) img.style.transform = 'scale(1)';
 
@@ -532,7 +538,121 @@
                 }, 1000);
             }, 1500);
         }
+
+        // ============================================================
+        // KONTROL MUSIK: Play / Pause dengan ikon yang berubah
+        // ============================================================
+        const music = document.getElementById('music');
+        const musicControl = document.getElementById('music-control');
+        const musicIcon = document.getElementById('music-icon');
+        const musicWave = document.getElementById('music-wave');
+
+        // Fungsi untuk toggle play/pause
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().catch(e => console.log('Autoplay diblokir:', e));
+                musicIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9" />';
+                musicWave.classList.remove('opacity-0');
+                musicWave.classList.add('opacity-100');
+            } else {
+                music.pause();
+                musicIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />';
+                musicWave.classList.add('opacity-0');
+                musicWave.classList.remove('opacity-100');
+            }
+        }
+
+        // Event listener tombol kontrol musik
+        musicControl.addEventListener('click', toggleMusic);
+
+        // Coba autoplay saat halaman dimuat (bisa diblokir browser)
+        window.addEventListener('load', () => {
+            music.play().catch(e => {
+                console.log('Autoplay tidak diizinkan. Pengguna harus klik tombol musik.');
+                // Tampilkan ikon Play (sudah default)
+            });
+        });
+
+        // Update icon jika musik selesai atau error
+        music.addEventListener('ended', () => {
+            musicIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />';
+            musicWave.classList.add('opacity-0');
+            musicWave.classList.remove('opacity-100');
+        });
     </script>
+
+    <!-- Tambahan CSS untuk leaf dan envelope (karena di style.css mungkin tidak ada) -->
+    <style>
+        body.body-locked {
+            overflow: hidden;
+        }
+        
+        .envelope-open-flap {
+            transform: rotateX(-180deg) !important;
+        }
+        
+        .envelope-paper-up {
+            transform: translateY(-30px) !important;
+        }
+        
+        .envelope-fade-out {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+        
+        #leaf-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+        
+        .leaf {
+            position: absolute;
+            background-color: #D4AF37;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            opacity: 0.5;
+            animation: fall linear infinite;
+            border-radius: 2px;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .sticky-nav {
+            transition: all 0.3s ease;
+            background: rgba(255, 250, 240, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #D4AF37;
+        }
+        
+        .gallery-item {
+            cursor: pointer;
+        }
+    </style>
 </body>
 
 </html>
