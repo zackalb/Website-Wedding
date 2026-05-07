@@ -115,6 +115,16 @@
         </div>
     </div>
 
+    <!-- AUDIO: Musik latar -->
+    <audio id="music" autoplay loop>
+        <source src="https://drive.google.com/uc?export=download&id=1FWRCIP1DtaEAY0eeapJ16T1RAAc0Z_vz" type="audio/mpeg">
+    </audio>
+
+    <!-- Tombol Play Music -->
+    <button onclick="document.getElementById('music').play()" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #D4AF37; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-family: sans-serif; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        ▶ Play Music
+    </button>
+
     <!-- BAGIAN: Wadah Animasi Daun Gugur (Floating Elements) -->
     <div id="leaf-container"></div>
 
